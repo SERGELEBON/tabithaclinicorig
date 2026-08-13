@@ -93,12 +93,23 @@ pnpm preview
 
 ## Environment Variables
 
-- `NODE_ENV`: Set to "production" for production mode
-- `PORT`: Server port (defaults to 3000)
+**Required for production:**
+- `VITE_FRONTEND_FORGE_API_KEY`: Google Maps API key (via Forge proxy) - **CRITICAL**
+- `VITE_FRONTEND_FORGE_API_URL`: Forge API base URL (defaults to https://forge.butterfly-effect.dev)
+
+**Optional:**
+- `VITE_ANALYTICS_ENDPOINT`: Umami analytics endpoint URL
+- `VITE_ANALYTICS_WEBSITE_ID`: Umami website tracking ID
 - `VITE_OAUTH_PORTAL_URL`: OAuth portal base URL (used in login flow)
 - `VITE_APP_ID`: Application ID for OAuth
 - `BUILT_IN_FORGE_API_URL`: Forge API base URL (for storage proxy)
 - `BUILT_IN_FORGE_API_KEY`: Forge API authentication key
+
+**Server:**
+- `NODE_ENV`: Set to "production" for production mode
+- `PORT`: Server port (defaults to 3000)
+
+**Note:** See `.env.example` for all available variables. In Vercel, set these in Project Settings → Environment Variables.
 
 ## Important Notes
 

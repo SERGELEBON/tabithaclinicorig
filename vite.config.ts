@@ -74,6 +74,22 @@ function writeToLogFile(source: LogSource, entries: unknown[]) {
  * - Files: browserConsole.log, networkRequests.log, sessionReplay.log
  * - Auto-trimmed when exceeding 1MB (keeps newest entries)
  */
+/**
+ * Vite plugin to replace environment variables in index.html
+ * Replaces %VITE_*% placeholders with actual env values
+ */
+function vitePluginEnvReplacer(): Plugin {
+  return {
+    name: "env-replacer",
+    transformIndexHtml(html) {
+      return html.replace(/%VITE_(\w+)%/g, (match, key) => {
+        const value = process.env[`VITE_${key}`];
+        return value || "";
+      });
+    },
+  };
+}
+
 function vitePluginManusDebugCollector(): Plugin {
   return {
     name: "manus-debug-collector",
@@ -203,7 +219,7 @@ function vitePluginStorageProxy(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginEnvReplacer(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
   plugins,
